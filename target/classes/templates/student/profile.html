@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="utf-8">
+    <title>Student Profile</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: teal;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+
+
+        .custom {
+            text-align: center;
+        }
+
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+
+        }
+
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+
+
+    </style>
+
+
+</head>
+
+<body>
+
+
+    <div class="custom">
+    <h2>Student Profile</h2>
+
+    <p><strong>Name:</strong> <span th:text="${retrieve_student.studentName}"></span></p>
+    <p><strong>AM:</strong> <span th:text="${retrieve_student.AM}"></span></p>
+    <p><strong>Average Grade:</strong> <span th:text="${retrieve_student.avgGrade}"></span></p>
+    <p><strong>Preferred Location:</strong> <span th:text="${retrieve_student.preferredLocation}"></span></p>
+
+    <p><strong>Interests:</strong></p>
+    <ul>
+    <li th:each="interest : ${retrieve_student.interests}" th:text="${interest}"></li>
+    </ul>
+
+    <p><strong>Skills:</strong></p>
+    <ul>
+    <li th:each="skill : ${retrieve_student.skills}" th:text="${skill}"></li>
+    </ul>
+
+    <form th:action="@{/student/ApplyForTraineeship}" method="post">
+        <input type="hidden" name="retrieve_student" th:value="${retrieve_student}" />
+        <button type="submit">Are you interested for Traineeship?</button>
+    </form>
+    <p th:if="${MESSAGE != null and !#strings.isEmpty(MESSAGE)}" th:text="${MESSAGE}"></p>
+    <a th:href="@{/student/LogBook}" class="bth" style="text-decoration: none;">Fill in LogBook</a>
+    <a th:href="@{/student/Dashboard}">Go Back</a>
+
+
+
+    </div>
+
+</body>
+</html>
+
+
+
+
+<!--
+            <input type="hidden" th:field="*{studentName}" />
+            <input type="hidden" th:field="*{AM}" />
+            <input type="hidden" th:field="*{avgGrade}" />
+            <input type="hidden" th:field="*{preferredLocation}" />
+
+            <div th:each="interest : *{interests}">
+                <input type="hidden" name="interests" th:value="${interest}" />
+            </div>
+
+            <div th:each="skill : *{skills}">
+                <input type="hidden" name="skills" th:value="${skill}" />
+            </div>  -->

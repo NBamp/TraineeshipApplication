@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta charset="utf-8">
+
+        <title>Traineeship Application</title>
+        <link rel="stylesheet" href="/style.css">
+        <style>
+            body{
+                background-color: darkslategray;;
+            }button{
+                background: darkslategray;
+                border: none;
+                color: burlywood;
+                font-size: 20px;
+                font-family: 'Bodoni MT Black',sans-serif;
+                font-weight: bold;
+                cursor: pointer;
+                display: block;
+                margin: 0 auto;
+                border-radius: 16px;
+                         }
+
+        </style>
+    </head>
+
+    <body>
+
+
+      <!--  <div th:class="loading"></div>
+            <b class="Title">Element</b>
+            <script>
+                const titles = ["Welcome To Traineeship Application"];
+                let index = 0;
+                let charIndex = 0;
+                const titleEl = document.querySelector('.Title');
+
+                function typeTitle() {
+                    if (charIndex < titles[index].length) {
+                        titleEl.textContent += titles[index][charIndex];
+                        charIndex++;
+                        setTimeout(typeTitle, 100); // delay between characters
+                    } else {
+                        setTimeout(() => {
+                            titleEl.textContent = ''; // clear text
+                            charIndex = 0;
+                            index = (index + 1) % titles.length;
+                            typeTitle(); // start typing next title
+                        }, 2000); // wait 2 seconds before next loop
+                    }
+                }
+
+                typeTitle(); // start typing on page load
+            </script>
+         -->
+      <div sec:authorize="hasRole('ROLE_ANONYMOUS')">
+          <p>
+              <button  type="button" onclick="window.location.href='/login'">Login</button>
+              <button  type="button" onclick="window.location.href='/register'">Register</button>
+          </p>
+      </div>
+
+      <div sec:authorize="isAuthenticated()">
+          <h4>Logged as: <span sec:authentication="name"></span></h4>
+          <h4>Has role: <span sec:authentication="authorities"></span></h4>
+          <a th:href="@{/logout}" class="btn btn-danger btn-sm mb-3"> Logout</a>
+
+          <br> <br> <hr> <br> <br>
+
+          <p sec:authorize="hasAuthority('STUDENT')">
+              <a th:href="@{/student/Dashboard}" class="btn btn-primary btn-sm mb-3" th:text="'Student Dashboard'"></a>
+          </p>
+
+          <p sec:authorize="hasAuthority('PROFESSOR')">
+              <a th:href="@{/professor/Dashboard}" class="btn btn-primary btn-sm mb-3" th:text="'Professor Dashboard'"></a>
+          </p>
+
+          <p sec:authorize="hasAuthority('COMPANY_MEMBER')">
+              <a th:href="@{/company/Dashboard}" class="btn btn-primary btn-sm mb-3" th:text="'Company Dashboard'"></a>
+          </p>
+
+          <p sec:authorize="hasAuthority('COMMITTEE_MEMBER')">
+              <a th:href="@{/committee/Dashboard}" class="btn btn-primary btn-sm mb-3" th:text="'Committee Dashboard'"></a>
+          </p>
+
+      </div>
+
+
+
+
+
+    </body>
+
+
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Student_Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: teal;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        /* Target all buttons with the btn-primary class */
+        .bth{
+            background-color: palevioletred; /* Green background */
+            color: black;              /* White text */
+            padding: 12px 24px;        /* Padding */
+            font-size: 16px;           /* Font size */
+            border: none;              /* Remove border */
+            border-radius: 6px;        /* Rounded corners */
+            cursor: pointer;           /* Pointer cursor on hover */
+            transition: background-color 0.3s ease; /* Smooth hover effect */
+        }
+
+        /* Add custom hover effect */
+        .bth:hover {
+            color: mediumblue;             /* Change the text color on hover */
+        }
+
+
+
+
+        .custom {
+            display: flex;           /* Apply Flexbox */
+            flex-direction: column;  /* Stack items vertically */
+            gap: 20px;               /* Adds space between the buttons */
+        }
+
+        .custom .btn {
+            width: 100%;             /* Optional: make the buttons full width */
+        }
+
+
+
+    </style>
+</head>
+
+<body>
+
+
+<div class = "custom">
+
+    <a th:href="@{/professor/Profile}" class="bth" style="text-decoration: none;">View Profile</a>
+    <div th:if="${#strings.isEmpty(flag)}" >
+        <a th:href="@{/professor/AddProfile}" class="bth" style="text-decoration: none;">Create New Profile</a>
+    </div>
+    <p th:if="${!#strings.isEmpty(flag)}" th:text="'Profile was successfully created'"> </p>
+    <a th:href="@{/student/LogBook}" class="bth" style="text-decoration: none;">Fill in LogBook</a>
+    <a th:href="@{/logout}" class="bth"  style="text-decoration: none;"> Logout</a>
+
+
+</div>
+
+
+
+
+
+</body>
+
+
+</html>

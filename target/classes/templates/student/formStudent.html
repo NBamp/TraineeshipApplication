@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+    <head>
+        <meta charset="utf-8">
+        <title>Student Register</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                background: teal;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 100vh;
+            }
+
+            .form-container {
+                background: gray;
+                padding: 30px;
+                border-radius: 10px;
+                box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+                width: 300px;
+            }
+
+            .form-container h2 {
+                text-align: center;
+                margin-bottom: 20px;
+
+            }
+
+            .custom {
+                text-align: center;
+            }
+
+
+
+
+            label {
+                display: block;
+                margin-bottom: 5px;
+                font-weight: bold;
+
+            }
+
+            input[type="text"],input[type="number"]
+             {
+                width: 100%;
+                padding: 10px;
+                margin-bottom: 15px;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+                box-sizing: border-box;
+                transition: border-color 0.3s;
+                background-color: bisque;
+            }
+
+            input[type="text"]:focus,input[type="number"]
+             {
+                border-color: #007bff;
+                outline: none;
+            }
+
+            button {
+                width: 100%;
+                padding: 10px;
+                background-color: #007bff;
+                color: white;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+                font-size: 16px;
+            }
+
+            button:hover {
+                background-color: #0056b3;
+            }
+
+
+
+            </style>
+
+        <script>
+            function addInterest() {
+                const container = document.getElementById("interest-container");
+                const index = container.children.length;
+
+                const wrapper = document.createElement("div");
+                wrapper.className = "interest-input";
+
+                const input = document.createElement("input");
+                input.type = "text";
+                input.name = "interests[" + index + "]";
+
+                const removeBtn = document.createElement("button");
+                removeBtn.type = "button";
+                removeBtn.textContent = "Remove";
+                removeBtn.onclick = function () {
+                    removeSkill(removeBtn);
+                };
+
+                wrapper.appendChild(input);
+                wrapper.appendChild(removeBtn);
+                container.appendChild(wrapper);
+            }
+
+            function removeInterest(button) {
+                const wrapper = button.parentElement;
+                wrapper.remove();
+
+                // Re-index all remaining inputs
+                const inputs = document.querySelectorAll("#interest-container-container .interest-input input");
+                inputs.forEach((input, i) => {
+                    input.name = "interest[" + i + "]";
+                });
+            }
+        </script>
+
+        <script>
+            function addSkill() {
+                const container = document.getElementById("skill-container");
+                const index = container.children.length;
+
+                const wrapper = document.createElement("div");
+                wrapper.className = "skill-input";
+
+                const input = document.createElement("input");
+                input.type = "text";
+                input.name = "skills[" + index + "]";
+
+                const removeBtn = document.createElement("button");
+                removeBtn.type = "button";
+                removeBtn.textContent = "Remove";
+                removeBtn.onclick = function () {
+                    removeSkill(removeBtn);
+                };
+
+                wrapper.appendChild(input);
+                wrapper.appendChild(removeBtn);
+                container.appendChild(wrapper);
+            }
+
+            function removeSkill(button) {
+                const wrapper = button.parentElement;
+                wrapper.remove();
+
+                // Re-index all remaining inputs
+                const inputs = document.querySelectorAll("#interest-container-container .skill-input input");
+                inputs.forEach((input, i) => {
+                    input.name = "skill[" + i + "]";
+                });
+            }
+        </script>
+
+    </head>
+
+    <body>
+        <div class="custom">
+            <h1 style="text-align: center;">Student registration</h1>
+
+        <div class="form-container">
+            <form action="#" th:action="@{/student/SaveProfile}" th:object="${student}" method="post">
+            <input type="hidden" th:field="*{studentUsername}" />
+
+            <p><strong>StudentName</strong>
+                <input type="text" th:field="*{studentName}" placeholder="Enter your Name" pattern="^[A-Za-z_][A-Za-z0-9_]*$"
+                       title="Name must start with a letter or underscore and contain only letters, digits, or underscores."
+                       />
+            </p>
+            <p><strong>AM</strong>
+                <label>
+                    <input type="number" th:field="*{AM}" placeholder="Enter your AM" />
+                </label>
+            </p>
+            <p><strong>AVG</strong>
+                <label>
+                    <input type="number" th:field="*{avgGrade}" placeholder="Enter your averageGrade" />
+                </label>
+            </p>
+            <p><strong>Location</strong>
+                <label>
+                    <input type="text" th:field="*{preferredLocation}" placeholder="Enter your preferredLocation" pattern="^[A-Za-z][A-Za-z]*$"
+                           />
+                </label>
+            </p>
+            <p><strong>Interests</strong>
+            <div id="interest-container">
+                <div th:each="interest, iterStat : *{interests}">
+                    <label>
+                        <br>
+                        <input type="text" th:field="*{interests[__${iterStat.index}__]}" pattern="^[A-Za-z]+$" />
+                        <button type="button" onclick="removeInterest(this)">Remove</button>
+                        <br>
+
+                    </label>
+                </div>
+            </div>
+                <br>
+            <button type="button" onclick="addInterest()">Add More Interest</button>
+            <br><br>
+
+
+
+            <p><strong>Skills</strong>
+            <div id="skill-container">
+                <div th:each="skill, iterStat : *{skills}">
+                    <label>
+                        <input type="text" th:field="*{skills[__${iterStat.index}__]}" pattern="^[A-Za-z]+$" />
+                        <button type="button" onclick="removeSkill(this)">Remove</button>
+
+                    </label>
+                </div>
+            </div>
+            <br>
+            <button type="button" onclick="addSkill()">Add More Skill</button>
+            <br><br>
+            <button type="submit">Submit</button>
+        </form>
+
+        </div>
+        </div>
+
+    </body>
+
+</html>

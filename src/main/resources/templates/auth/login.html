@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Login_Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: darkslategray;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .form-container {
+            background: gray;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            width: 300px;
+        }
+
+        .form-container h2 {
+            text-align: center;
+            margin-bottom: 20px;
+
+        }
+
+        select {
+
+            width: 100%;
+            padding: 10px;
+            font-size: 12px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: bisque;
+            font-weight: bold;
+            appearance: none; /* Remove default arrow styling (optional) */
+            -webkit-appearance: none;
+            -moz-appearance: none;
+        }
+
+        /* Optional: Add a custom arrow using background */
+        select:focus {
+            outline: none;
+            border-color: #007bff;
+            background-color: #fff;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+            transition: border-color 0.3s;
+            background-color: bisque;
+        }
+
+        input[type="text"]:focus,
+        input[type="password"]:focus {
+            border-color: #007bff;
+            outline: none;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="form-container">
+    <h2>Login</h2>
+    <form  autocomplete="off" th:action="@{/login}" method="post">
+        <p><strong>Username:</strong>
+            <label>
+                <input type="text" name="username" placeholder="Enter your username" pattern="^[A-Za-z_][A-Za-z0-9_]*$"
+                       title="Username must start with a letter or underscore and contain only letters, digits, or underscores."
+                       required/>
+            </label>
+        </p>
+        <p><strong>Password:</strong>
+            <label>
+                <input type="password" name="password" placeholder="Enter your password" required/>
+                <!-- pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"
+                  title="Password must be at least 8 characters and include uppercase, lowercase, number, and special character." -->
+
+            </label>
+        </p>
+
+        <button type="submit">Login</button>
+
+
+    </form>
+</div>
+</body>
+</html>
